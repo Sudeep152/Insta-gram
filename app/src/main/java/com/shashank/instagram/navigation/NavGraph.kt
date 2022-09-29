@@ -25,11 +25,11 @@ fun setUpNavGraph(navController: NavHostController) {
 
             val igViewModel = hiltViewModel<IgViewModel>()
 
-            LoginScreen(navController, igViewModel)
+            LoginScreen(navController,igViewModel)
         }
         composable(route=Screen.SignUpScreen.route){
             val igViewModel = hiltViewModel<IgViewModel>()
-            SignUpScreen(navController = navController, igViewModel = igViewModel)
+            SignUpScreen(navController = navController,igViewModel)
         }
 
     }

@@ -36,31 +36,36 @@ import java.util.logging.Handler
 fun SplashScreen(navController: NavController) {
 
 
-    Column(modifier = Modifier
+    Box(modifier = Modifier
         .fillMaxSize()
         .background(Color(0, 0, 0)),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.height(220.dp))
-        LottieLoader()
-        Spacer(modifier = Modifier.height(200.dp))
-        Column(modifier = Modifier
-            .wrapContentSize()
-            .padding(100.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center) {
-            Text(text = "from",
-                modifier = Modifier.fillMaxWidth(),
-                color = Color.LightGray,
-                textAlign = TextAlign.Center)
-            Image(modifier = Modifier
-                .size(110.dp)
-                .wrapContentSize(),
-                painter = painterResource(id = R.drawable.metalogo),
-                contentDescription = "metalogf")
+       contentAlignment = Alignment.Center
+        ) {
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceAround) {
+
+            LottieLoader()
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.wrapContentSize()
+            , verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = "from",
+                    modifier = Modifier.wrapContentSize(),
+                    color = Color.LightGray,
+                    textAlign = TextAlign.Center)
+                Image(modifier = Modifier
+                    .height(20.dp)
+                    .wrapContentSize()
+                    .size(55.dp),
+                    painter = painterResource(id = R.drawable.metalogo),
+                    contentDescription = "metalogf")
+
+
+            }
 
 
         }
+
+
 
 
     }
