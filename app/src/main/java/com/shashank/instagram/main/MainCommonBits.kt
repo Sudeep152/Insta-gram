@@ -8,12 +8,12 @@ import androidx.compose.ui.platform.LocalContext
 import com.shashank.instagram.viewmodel.IgViewModel
 
 @Composable
-fun  NotificationMessage(vm :IgViewModel){
+fun NotificationMessage(vm: IgViewModel) {
     val conte = LocalContext.current
     val notifState = vm.popNotification.value
     val notificationMsg = notifState?.getContentOrNull()
-    if (notificationMsg!=null){
-      Toast.makeText(conte,notificationMsg,Toast.LENGTH_SHORT).show()
+    if (notificationMsg != null) {
+        Toast.makeText(conte, notificationMsg, Toast.LENGTH_SHORT).show()
     }
 
 

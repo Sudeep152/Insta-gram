@@ -31,7 +31,7 @@ fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
     val usernameState = remember {
         mutableStateOf(TextFieldValue())
     }
-    val emailState  =remember {
+    val emailState = remember {
         mutableStateOf(TextFieldValue())
     }
     val fullNameState = remember {
@@ -131,7 +131,7 @@ fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
                             unfocusedIndicatorColor = Color.Transparent
                         ),
                         onValueChange = {
-                             fullNameState.value = it
+                            fullNameState.value = it
                         },
                         placeholder = {
                             Text(text = "Full Name", fontSize = 14.sp)
@@ -175,7 +175,7 @@ fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
                             unfocusedIndicatorColor = Color.Transparent
                         ),
                         onValueChange = {
-                           usernameState.value = it
+                            usernameState.value = it
                         },
                         placeholder = {
                             Text(text = "Username", fontSize = 14.sp)
@@ -222,17 +222,19 @@ fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
                             unfocusedIndicatorColor = Color.Transparent
                         ),
                         onValueChange = {
-                          passwordState.value = it
+                            passwordState.value = it
                         },
                         placeholder = {
                             Text(text = "Password", fontSize = 14.sp)
                         },
-                        visualTransformation = PasswordVisualTransformation()
-                        ,shape = RoundedCornerShape(8.dp),
+                        visualTransformation = PasswordVisualTransformation(),
+                        shape = RoundedCornerShape(8.dp),
                         singleLine = true,
                         trailingIcon = {
                             if (passwordState.value.text.isNotEmpty()) {
-                                IconButton(onClick = { passwordState.value =(TextFieldValue("")) }) {
+                                IconButton(onClick = {
+                                    passwordState.value = (TextFieldValue(""))
+                                }) {
                                     Icon(
                                         imageVector = Icons.Outlined.Close,
                                         contentDescription = null
@@ -258,7 +260,9 @@ fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
                     ////BUtton
                     //CALL
                     //Handle
-                    igViewModel.onSignUp(usernameState.value.text,emailState.value.text,passwordState.value.text)
+                    igViewModel.onSignUp(usernameState.value.text,
+                        emailState.value.text,
+                        passwordState.value.text,fullNameState.value.text)
 
 
                 }

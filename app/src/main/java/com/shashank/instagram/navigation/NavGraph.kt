@@ -20,7 +20,7 @@ import com.shashank.instagram.viewmodel.IgViewModel
 @Composable
 fun setUpNavGraph(navController: NavHostController) {
 
-  NavHost(navController =
+    NavHost(navController =
     navController, startDestination = Screen.SplashScreen.route) {
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(navController = navController)
@@ -34,13 +34,13 @@ fun setUpNavGraph(navController: NavHostController) {
 
 
 
-            LoginScreen(navController,igViewModel)
+            LoginScreen(navController, igViewModel)
         }
-        composable(route=Screen.SignUpScreen.route){
+        composable(route = Screen.SignUpScreen.route) {
 
             val igViewModel = hiltViewModel<IgViewModel>()
             NotificationMessage(vm = igViewModel)
-            SignUpScreen(navController = navController,igViewModel)
+            SignUpScreen(navController = navController, igViewModel)
         }
 
     }
