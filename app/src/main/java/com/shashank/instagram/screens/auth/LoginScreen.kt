@@ -130,6 +130,7 @@ fun EdtTextField(hint: String) {
     }
 
 
+
 }
 
 
@@ -146,7 +147,6 @@ fun MyButton(text: String, modifier: Modifier = Modifier, click: () -> Unit) {
 
     val context = LocalContext.current
     Button(onClick = {
-        Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show()
         click()
     },
         modifier = Modifier
