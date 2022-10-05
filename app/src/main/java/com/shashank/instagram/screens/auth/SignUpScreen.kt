@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.shashank.instagram.R
+import com.shashank.instagram.main.LoadingScreen
 import com.shashank.instagram.viewmodel.IgViewModel
 
 
@@ -285,6 +286,10 @@ fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
 
     }
 
+    val isLoading = igViewModel.progressBar.value
+    if (isLoading){
+        LoadingScreen()
+    }
 
 }
 

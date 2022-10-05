@@ -1,16 +1,25 @@
 package com.shashank.instagram.viewmodel
 
+import android.annotation.SuppressLint
+import android.widget.Toast
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.shashank.instagram.data.Event
 import com.shashank.instagram.data.UserModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 const val USER = "users"
@@ -22,10 +31,23 @@ class IgViewModel @Inject constructor(
     val storage: FirebaseStorage,
 ) : ViewModel() {
 
+
     val progressBar = mutableStateOf(false)
     val isSigned = mutableStateOf(false)
     val userData = mutableStateOf<UserModel?>(null)
     val popNotification = mutableStateOf<Event<String>?>(null)
+
+
+
+    init {
+
+        val currentUser = auth.currentUser
+        isSigned.value = currentUser!=null
+        currentUser?.uid?.let {getUserData(it)
+        }
+
+
+    }
 
 
     fun onSignUp(username: String, email: String, pass: String, fullName: String) {
@@ -33,8 +55,15 @@ class IgViewModel @Inject constructor(
         db.collection(USER).whereEqualTo("username", username).get()
             .addOnSuccessListener { document ->
                 if (document.size() > 0) {
-                    ErrorHandleing(customMsg = "username is already taken")
-                    progressBar.value = true
+                    viewModelScope.launch {
+                       delay(1500)
+                        progressBar.value = false
+                        ErrorHandleing(customMsg = "username is already taken")
+                    }
+
+
+
+
                 } else {
 
                     if (email.isNotEmpty() || pass.isNotEmpty()) {
@@ -43,17 +72,27 @@ class IgViewModel @Inject constructor(
                                 if (it.isSuccessful) {
                                     isSigned.value = true
                                     ///CREATE PROFILE
+                                    createOrUpdateProfile(username,email,fullName)
 
-                                    createOrUpdateProfile(username)
 
                                 } else {
-                                    ErrorHandleing(it.exception, "Sign up failed")
+
+                                    viewModelScope.launch {
+                                        delay(1500)
+                                        progressBar.value = false
+                                        ErrorHandleing(it.exception, "Sign up failed")
+                                    }
+
                                 }
 
                             }
-                        progressBar.value = true
+                        progressBar.value = false
                     } else {
-                        ErrorHandleing(customMsg = "Please enter all field ")
+                        viewModelScope.launch {
+                            delay(1500)
+                            progressBar.value = false
+                            ErrorHandleing(customMsg = "Please enter all field ")
+                        }
                     }
 
 
@@ -70,39 +109,59 @@ class IgViewModel @Inject constructor(
         username: String,
         email: String? = null, name: String? = null,
         imageUrl: String? = null,
-        bio: String? = null
+        bio: String? = null,
     ) {
         val uid = auth.currentUser?.uid
         val userData = UserModel(
             userId = uid,
-            username= username,
-            name= name ?:userData.value?.name,
-            email = email ?:userData.value?.email,
-            bio = bio ?:userData.value?.bio,
+            username = username,
+            imageUri = imageUrl,
+            name = name ?: userData.value?.name,
+            email = email ?: userData.value?.email,
+            bio = bio ?: userData.value?.bio,
             following = userData.value?.following
         )
 
         uid?.let {
-            progressBar.value=true;
-            db.collection(USER).document(uid).get().addOnSuccessListener { mydata->
-                if (mydata.exists()){
+            progressBar.value = true;
+            db.collection(USER).document(uid).get().addOnSuccessListener { mydata ->
+                if (mydata.exists()) {
                     mydata.reference.update(userData.toMap()).addOnSuccessListener {
-                        this.userData.value= userData
-                       progressBar.value=false;
+                        this.userData.value = userData
+                        viewModelScope.launch {
+                            delay(1500)
+                            progressBar.value = false;
+                        }
+
                     }.addOnFailureListener {
-                        ErrorHandleing(it,"Cannot update account")
+                        viewModelScope.launch {
+                        delay(1500)
+                        progressBar.value = false
+                        ErrorHandleing(it, "Cannot update account")
                     }
-                }else{
+
+
+                    }
+                } else {
 
                     db.collection(USER).document(uid).set(userData).addOnSuccessListener {
                         getUserData(uid)
-                        progressBar.value=false;
+                        viewModelScope.launch {
+                            delay(1500)
+                            progressBar.value = false;
+                        }
+
+
+
                     }
 
 
                 }.addOnFailureListener {
-                    ErrorHandleing(it,"Cannot create your account")
-                    progressBar.value=false;
+                    viewModelScope.launch {
+                        delay(1500)
+                        progressBar.value = false;
+                        ErrorHandleing(it, "Cannot create your account")
+                    }
                 }
 
 
@@ -115,6 +174,21 @@ class IgViewModel @Inject constructor(
     }
 
     private fun getUserData(uid: String) {
+        progressBar.value = true
+        db.collection(USER).document(uid).get().addOnSuccessListener {
+
+            val user = it.toObject<UserModel>()
+            userData.value = user
+            popNotification.value = Event("User data retrieved ${userData.value?.username} ")
+            progressBar.value = false
+
+
+
+        }.addOnFailureListener {
+            ErrorHandleing(it, "Cannot retrieve user data")
+            progressBar.value = false
+        }
+
 
     }
 
