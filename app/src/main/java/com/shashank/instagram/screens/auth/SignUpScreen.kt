@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.shashank.instagram.R
 import com.shashank.instagram.main.LoadingScreen
+import com.shashank.instagram.main.checkAutoLogin
+import com.shashank.instagram.sealed.Screen
 import com.shashank.instagram.viewmodel.IgViewModel
 
 
@@ -41,7 +43,7 @@ fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
     val passwordState = remember {
         mutableStateOf(TextFieldValue())
     }
-
+checkAutoLogin(igViewModel = igViewModel, navController =navController )
 
     Surface(modifier = Modifier.fillMaxSize(), color = Color(0, 0, 0)) {
         Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -275,7 +277,7 @@ fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
                     secondText = " Log in.",
                     textSize = 13,
                     click = {
-
+                       navController.popBackStack()
                     }
                 )
             }

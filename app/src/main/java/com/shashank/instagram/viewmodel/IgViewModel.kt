@@ -16,6 +16,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.shashank.instagram.data.Event
 import com.shashank.instagram.data.UserModel
+import com.shashank.instagram.main.NotificationMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -41,6 +42,7 @@ class IgViewModel @Inject constructor(
 
     init {
 
+        auth.signOut()
         val currentUser = auth.currentUser
         isSigned.value = currentUser!=null
         currentUser?.uid?.let {getUserData(it)
@@ -191,6 +193,49 @@ class IgViewModel @Inject constructor(
 
 
     }
+
+
+
+
+
+
+    fun  onLogin(email:String ,pass: String){
+        if (email.isEmpty() || pass.isEmpty()){
+            ErrorHandleing(customMsg = "Enter all field")
+        }else{
+
+            progressBar.value=true
+            auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener {
+                if (it.isSuccessful){
+                    isSigned.value=true;
+                  auth.currentUser?.uid?.let { uid->
+                      getUserData(uid)
+                  }
+                    progressBar.value=false
+                    ErrorHandleing(customMsg = "Login Successfully")
+                }else{
+                    ErrorHandleing(it.exception,"Login Failed.")
+                }
+
+            }.addOnFailureListener {
+                progressBar.value=false
+                ErrorHandleing(it, it.localizedMessage!!)
+            }
+
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
 
 
     fun ErrorHandleing(e: Exception? = null, customMsg: String = "") {

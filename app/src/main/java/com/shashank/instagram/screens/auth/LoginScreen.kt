@@ -20,11 +20,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.shashank.instagram.R
+import com.shashank.instagram.main.LoadingScreen
+import com.shashank.instagram.main.checkAutoLogin
 import com.shashank.instagram.sealed.Screen
 import com.shashank.instagram.viewmodel.IgViewModel
 
@@ -32,7 +36,14 @@ import com.shashank.instagram.viewmodel.IgViewModel
 @Composable
 fun LoginScreen(navController: NavController,igViewModel: IgViewModel) {
 
+    val emailState = remember {
+        mutableStateOf(TextFieldValue())
+    }
 
+    val passwordState = remember {
+        mutableStateOf(TextFieldValue())
+    }
+    checkAutoLogin(igViewModel = igViewModel,navController)
     Box(contentAlignment = Alignment.Center, modifier = Modifier
         .fillMaxSize()
         .background(Color(0, 0, 0))) {
@@ -40,11 +51,108 @@ fun LoginScreen(navController: NavController,igViewModel: IgViewModel) {
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(20.dp)) {
             rememberScrollState()
-
             InstagramLogo(painter = painterResource(id = R.drawable.instagram_logo))
 
-            EdtTextField(hint = "Phone number, username or email")
-            EdtTextField(hint = "Password")
+
+
+
+
+            Box(modifier = Modifier
+                .padding(top = 25.dp)
+                .fillMaxWidth()
+                .height(55.dp)) {
+                val maxLength = 100
+                val lightBlue = Color(24, 24, 24)
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = emailState.value,
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = lightBlue,
+                        textColor = Color.White,
+                        cursorColor = Color(0, 136, 248),
+                        disabledLabelColor = lightBlue,
+                        placeholderColor = Color(129, 129, 129),
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
+                    onValueChange = {
+                        emailState.value = it
+                    },
+                    placeholder = {
+                        Text(text = "Mobile Number or Email", fontSize = 14.sp)
+                    },
+                    shape = RoundedCornerShape(8.dp),
+                    singleLine = true,
+                    trailingIcon = {
+//                            if (emailState.value.text.isNotEmpty()) {
+//                                IconButton(onClick = { emailState.value.text.  }) {
+//                                    Icon(
+//                                        imageVector = Icons.Outlined.Close,
+//                                        contentDescription = null
+//                                    )
+//                                }
+//                            }
+                    }
+                )
+            }
+
+
+
+
+
+
+
+
+
+
+            Box(modifier = Modifier
+                .padding(top = 25.dp)
+                .fillMaxWidth()
+                .height(55.dp)) {
+                val maxLength = 100
+                val lightBlue = Color(24, 24, 24)
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = passwordState.value,
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = lightBlue,
+                        textColor = Color.White,
+                        cursorColor = Color(0, 136, 248),
+                        disabledLabelColor = lightBlue,
+                        placeholderColor = Color(129, 129, 129),
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
+                    onValueChange = {
+                        passwordState.value = it
+                    },
+                    placeholder = {
+                        Text(text = "Password", fontSize = 14.sp)
+                    },
+                    visualTransformation = PasswordVisualTransformation(),
+                    shape = RoundedCornerShape(8.dp),
+                    singleLine = true,
+                    trailingIcon = {
+                        if (passwordState.value.text.isNotEmpty()) {
+                            IconButton(onClick = {
+                                passwordState.value = (TextFieldValue(""))
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Close,
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                    }
+                )
+
+
+            }
+
+
+
+
+
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp), contentAlignment = Alignment.BottomEnd) {
@@ -52,7 +160,7 @@ fun LoginScreen(navController: NavController,igViewModel: IgViewModel) {
             }
             MyButton(text = "Log in",
                 click = {
-
+                   igViewModel.onLogin(emailState.value.text,passwordState.value.text)
                 }
             )
             Spacer(modifier = Modifier
@@ -79,6 +187,10 @@ fun LoginScreen(navController: NavController,igViewModel: IgViewModel) {
 
         }
 
+    }
+
+    if(igViewModel.progressBar.value){
+        LoadingScreen()
     }
 
 }

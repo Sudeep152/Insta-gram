@@ -13,8 +13,7 @@ import com.shashank.instagram.navigation.setUpNavGraph
 import com.shashank.instagram.screens.splash.SplashScreen
 import com.shashank.instagram.ui.theme.InstagramTheme
 import dagger.hilt.android.AndroidEntryPoint
-import com.google.accompanist.navigation.animation.navigation
-import com.google.accompanist.navigation.animation.composable
+ 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
