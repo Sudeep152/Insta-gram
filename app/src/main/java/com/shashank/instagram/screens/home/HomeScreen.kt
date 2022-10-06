@@ -11,7 +11,7 @@ import com.shashank.instagram.viewmodel.IgViewModel
 @Composable
 fun HomeScreen(navController: NavHostController, igViewModel: IgViewModel) {
 Surface(modifier = Modifier.fillMaxSize()) {
-    Text(text = "Hello")
+    Text(text = "Hello ${igViewModel.userData.value}")
 }
 
 }

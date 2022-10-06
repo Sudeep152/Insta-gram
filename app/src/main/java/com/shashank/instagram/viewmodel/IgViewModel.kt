@@ -42,7 +42,7 @@ class IgViewModel @Inject constructor(
 
     init {
 
-        auth.signOut()
+      //  auth.signOut()
         val currentUser = auth.currentUser
         isSigned.value = currentUser!=null
         currentUser?.uid?.let {getUserData(it)
@@ -81,19 +81,19 @@ class IgViewModel @Inject constructor(
 
                                     viewModelScope.launch {
                                         delay(1500)
-                                        progressBar.value = false
                                         ErrorHandleing(it.exception, "Sign up failed")
+                                        progressBar.value = false
                                     }
 
                                 }
 
                             }
-                        progressBar.value = false
                     } else {
                         viewModelScope.launch {
-                            delay(1500)
-                            progressBar.value = false
+                            delay(1000)
+
                             ErrorHandleing(customMsg = "Please enter all field ")
+                            progressBar.value = false
                         }
                     }
 
