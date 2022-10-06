@@ -1,13 +1,20 @@
+@file:OptIn(ExperimentalAnimationApi::class)
+
 package com.shashank.instagram.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.runtime.Composable
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.navigation
+import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.shashank.instagram.main.NotificationMessage
 import com.shashank.instagram.screens.auth.LoginScreen
@@ -20,12 +27,49 @@ import com.shashank.instagram.viewmodel.IgViewModel
 @Composable
 fun setUpNavGraph(navController: NavHostController) {
 
-    NavHost(navController =
+    AnimatedNavHost(navController =
     navController, startDestination = Screen.SplashScreen.route) {
-        composable(route = Screen.SplashScreen.route) {
+        composable(route = Screen.SplashScreen.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(200))
+        },
+            exitTransition = {
+                slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(200))
+            },
+            popEnterTransition = {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(200))
+            },
+            popExitTransition = {
+                slideOutOfContainer(AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(200))
+            }
+
+        ) {
+
             SplashScreen(navController = navController)
+
+
         }
-        composable(route = Screen.LoginScreen.route) {
+        composable(route = Screen.LoginScreen.route,
+            enterTransition = {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(200))
+            },
+            exitTransition = {
+                slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(200))
+            },
+            popEnterTransition = {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(200))
+            },
+            popExitTransition = {
+                slideOutOfContainer(AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(200))
+            }
+
+        ) {
 
 
             val igViewModel = hiltViewModel<IgViewModel>()
@@ -35,15 +79,36 @@ fun setUpNavGraph(navController: NavHostController) {
 
 
             LoginScreen(navController, igViewModel)
+
         }
-        composable(route = Screen.SignUpScreen.route) {
+        composable(route = Screen.SignUpScreen.route,
+            enterTransition = {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(200))
+            },
+            exitTransition = {
+                slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(200))
+            },
+            popEnterTransition = {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(200))
+            },
+            popExitTransition = {
+                slideOutOfContainer(AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(200))
+            }
+        ) {
 
             val igViewModel = hiltViewModel<IgViewModel>()
             NotificationMessage(vm = igViewModel)
+
             SignUpScreen(navController = navController, igViewModel)
+
         }
 
     }
 
 }
+
 

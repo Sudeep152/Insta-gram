@@ -2,6 +2,7 @@ package com.shashank.instagram.main
 
 import android.app.Notification
 import android.widget.Toast
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
@@ -66,3 +67,4 @@ fun LoadingScreen(){
 
 
 }
+
