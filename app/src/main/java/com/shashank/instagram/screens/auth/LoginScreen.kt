@@ -83,16 +83,7 @@ fun LoginScreen(navController: NavController,igViewModel: IgViewModel) {
                     },
                     shape = RoundedCornerShape(8.dp),
                     singleLine = true,
-                    trailingIcon = {
-//                            if (emailState.value.text.isNotEmpty()) {
-//                                IconButton(onClick = { emailState.value.text.  }) {
-//                                    Icon(
-//                                        imageVector = Icons.Outlined.Close,
-//                                        contentDescription = null
-//                                    )
-//                                }
-//                            }
-                    }
+
                 )
             }
 
