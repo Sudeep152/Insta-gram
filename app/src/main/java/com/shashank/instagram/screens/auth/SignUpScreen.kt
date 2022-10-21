@@ -43,7 +43,7 @@ fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
     val passwordState = remember {
         mutableStateOf(TextFieldValue())
     }
-checkAutoLogin(igViewModel = igViewModel, navController =navController )
+    checkAutoLogin(igViewModel = igViewModel, navController = navController)
 
     Surface(modifier = Modifier.fillMaxSize(), color = Color(0, 0, 0)) {
         Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -184,17 +184,7 @@ checkAutoLogin(igViewModel = igViewModel, navController =navController )
                             Text(text = "Username", fontSize = 14.sp)
                         },
                         shape = RoundedCornerShape(8.dp),
-                        singleLine = true,
-                        trailingIcon = {
-//                            if (usernameState.isNotEmpty()) {
-//                                IconButton(onClick = { usernameState = "" }) {
-//                                    Icon(
-//                                        imageVector = Icons.Outlined.Close,
-//                                        contentDescription = null
-//                                    )
-//                                }
-//                            }
-                        }
+                        singleLine = true
                     )
 
 
@@ -265,7 +255,7 @@ checkAutoLogin(igViewModel = igViewModel, navController =navController )
                     //Handle
                     igViewModel.onSignUp(usernameState.value.text,
                         emailState.value.text,
-                        passwordState.value.text,fullNameState.value.text)
+                        passwordState.value.text, fullNameState.value.text)
 
 
                 }
@@ -277,7 +267,7 @@ checkAutoLogin(igViewModel = igViewModel, navController =navController )
                     secondText = " Log in.",
                     textSize = 13,
                     click = {
-                       navController.popBackStack()
+                        navController.popBackStack()
                     }
                 )
             }
@@ -289,7 +279,7 @@ checkAutoLogin(igViewModel = igViewModel, navController =navController )
     }
 
     val isLoading = igViewModel.progressBar.value
-    if (isLoading){
+    if (isLoading) {
         LoadingScreen()
     }
 

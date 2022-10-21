@@ -1,32 +1,24 @@
-@file:OptIn(ExperimentalAnimationApi::class)
-
 package com.shashank.instagram.navigation
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
-import androidx.compose.runtime.*
-
+import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
-import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.shashank.instagram.main.NotificationMessage
-import com.shashank.instagram.screens.auth.LoginScreen
-import com.shashank.instagram.screens.auth.SignUpScreen
-import com.shashank.instagram.screens.home.HomeScreen
-import com.shashank.instagram.screens.splash.SplashScreen
-import com.shashank.instagram.sealed.Screen
+import com.google.accompanist.navigation.animation.composable
+import com.shashank.instagram.screens.bottom.*
+import com.shashank.instagram.sealed.BottomNavItem
 import com.shashank.instagram.viewmodel.IgViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun setUpNavGraph(navController: NavHostController) {
+fun BottomNavGraph(navController: NavHostController) {
 
+    AnimatedNavHost(navController = navController, startDestination = BottomNavItem.HomeNavItem.route ){
 
-    AnimatedNavHost(navController =
-    navController, startDestination = Screen.SplashScreen.route) {
-        composable(route = Screen.SplashScreen.route, enterTransition = {
+        composable(route = BottomNavItem.HomeNavItem.route,enterTransition = {
             slideIntoContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(200))
         },
             exitTransition = {
@@ -41,22 +33,16 @@ fun setUpNavGraph(navController: NavHostController) {
                 slideOutOfContainer(AnimatedContentScope.SlideDirection.Right,
                     animationSpec = tween(200))
             }
-
-        ) {
-
-            SplashScreen(navController = navController)
-
-
+        ){
+            HomeScreen()
         }
-        composable(route = Screen.LoginScreen.route,
-            enterTransition = {
-                slideIntoContainer(AnimatedContentScope.SlideDirection.Left,
-                    animationSpec = tween(200))
-            },
-            exitTransition = {
-                slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
-                    animationSpec = tween(200))
-            },
+        composable(route=BottomNavItem.SearchNavItem.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(200))
+
+        }, exitTransition = {
+            slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
+                animationSpec = tween(200))
+        },
             popEnterTransition = {
                 slideIntoContainer(AnimatedContentScope.SlideDirection.Right,
                     animationSpec = tween(200))
@@ -66,27 +52,16 @@ fun setUpNavGraph(navController: NavHostController) {
                     animationSpec = tween(200))
             }
 
-        ) {
-
-
-            val igViewModel = hiltViewModel<IgViewModel>()
-            NotificationMessage(vm = igViewModel)
-
-
-
-
-            LoginScreen(navController, igViewModel)
-
+        ){
+            SearchScreen()
         }
-        composable(route = Screen.SignUpScreen.route,
-            enterTransition = {
-                slideIntoContainer(AnimatedContentScope.SlideDirection.Left,
-                    animationSpec = tween(200))
-            },
-            exitTransition = {
-                slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
-                    animationSpec = tween(200))
-            },
+        composable(route = BottomNavItem.AddPostNavItem.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(200))
+
+        }, exitTransition = {
+            slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
+                animationSpec = tween(200))
+        },
             popEnterTransition = {
                 slideIntoContainer(AnimatedContentScope.SlideDirection.Right,
                     animationSpec = tween(200))
@@ -95,19 +70,16 @@ fun setUpNavGraph(navController: NavHostController) {
                 slideOutOfContainer(AnimatedContentScope.SlideDirection.Right,
                     animationSpec = tween(200))
             }
-        ) {
 
-            val igViewModel = hiltViewModel<IgViewModel>()
-            NotificationMessage(vm = igViewModel)
 
-            SignUpScreen(navController = navController, igViewModel)
-
+        ){
+          AddPostScreen()
         }
-        composable(route = Screen.HomeScreen.route
-        ,   enterTransition = {
-                slideIntoContainer(AnimatedContentScope.SlideDirection.Left,
-                    animationSpec = tween(200))
-            },
+
+        composable(BottomNavItem.NotificationNavItem.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(200))
+
+        },
             exitTransition = {
                 slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
                     animationSpec = tween(200))
@@ -121,13 +93,31 @@ fun setUpNavGraph(navController: NavHostController) {
                     animationSpec = tween(200))
             }
         ){
+            NotificationScreen()
+        }
+
+        composable(BottomNavItem.ProfileNavItem.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(200))
+
+        },
+            exitTransition = {
+                slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(200))
+            },
+            popEnterTransition = {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(200))
+            },
+            popExitTransition = {
+                slideOutOfContainer(AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(200))
+            }
+
+        ){
 
             val igViewModel = hiltViewModel<IgViewModel>()
-            HomeScreen(navController = navController, igViewModel =igViewModel )
+            ProfileScreen(navController,igViewModel)
         }
 
     }
-
 }
-
-
