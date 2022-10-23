@@ -240,7 +240,9 @@ fun EdtTextField(hint: String) {
 @Composable
 fun InstagramLogo(painter: Painter, modifier: Modifier = Modifier) {
     Image(painter = painter,
-        contentDescription = "logo")
+        contentDescription = "logo"
+    , modifier = modifier
+    )
 
 }
 

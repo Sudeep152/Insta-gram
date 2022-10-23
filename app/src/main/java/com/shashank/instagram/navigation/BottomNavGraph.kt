@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.shashank.instagram.screens.bottom.*
+import com.shashank.instagram.screens.main.NewFeedScreen
 import com.shashank.instagram.sealed.BottomNavItem
 import com.shashank.instagram.viewmodel.IgViewModel
 
@@ -34,7 +35,7 @@ fun BottomNavGraph(navController: NavHostController) {
                     animationSpec = tween(200))
             }
         ){
-            HomeScreen()
+            NewFeedScreen()
         }
         composable(route=BottomNavItem.SearchNavItem.route, enterTransition = {
             slideIntoContainer(AnimatedContentScope.SlideDirection.Left, animationSpec = tween(200))

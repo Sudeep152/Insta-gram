@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -26,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.shashank.instagram.R
 import com.shashank.instagram.navigation.BottomNavGraph
+import com.shashank.instagram.screens.auth.InstagramLogo
 import com.shashank.instagram.sealed.BottomNavItem
 import com.shashank.instagram.viewmodel.IgViewModel
 
@@ -43,6 +45,20 @@ fun MainScreen() {
     val navController = rememberAnimatedNavController()
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                modifier =Modifier.fillMaxWidth()
+                ,
+                title = {
+                    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+                        InstagramLogo(painter = painterResource(id = R.drawable.instagram_logo), modifier = Modifier.padding(13.dp
+                        ))
+                    }
+
+                },
+                backgroundColor = Color(24,24,24)
+            )
+        },
         bottomBar = {
    BottomBar(navController = navController)
         }
@@ -92,21 +108,29 @@ fun RowScope.AddItem(
     currentDestination: NavDestination,
     navController: NavHostController,
 ) {
+    val backStackEntry = navController.currentBackStackEntryAsState()
+        val currentRoute = backStackEntry.value?.destination?.route;
+        val selected = currentRoute == screen.route
     BottomNavigationItem(
         icon = {
             Icon(imageVector = screen.icon, contentDescription = "Nav", tint =
-                if(screen.title =="AddPost") Color(215,11,123)
-                else Color.White
-                , modifier = if (screen.title=="AddPost"){
+            if (selected) {
+                Color(215,11,123)
+            }else{
+                Color.White
+            }
 
-                    Modifier.size(50.dp).clip(RoundedCornerShape(50.dp)).background(Color.White)
-
-                }else{
-                    Modifier.size(25.dp)
-                }
-
+//                if(screen.title =="AddPost") Color(215,11,123)
+//                else Color.White
+//                , modifier = if (screen.title=="AddPost"){
+//                    Modifier.size(50.dp).clip(RoundedCornerShape(50.dp)).background(Color.White)
+//                }else{
+//                    Modifier.size(25.dp)
+//                }
             )
         },
+        selectedContentColor = Color(252,11,123)
+        ,
 
 
 
