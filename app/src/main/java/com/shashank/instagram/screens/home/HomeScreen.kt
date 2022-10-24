@@ -6,8 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,11 +29,13 @@ import com.shashank.instagram.navigation.BottomNavGraph
 import com.shashank.instagram.screens.auth.InstagramLogo
 import com.shashank.instagram.sealed.BottomNavItem
 import com.shashank.instagram.viewmodel.IgViewModel
+import kotlinx.coroutines.delay
 
 @Composable
 fun HomeScreen(navController: NavHostController, igViewModel: IgViewModel) {
 
-    MainScreen()
+   MainScreen()
+
 
 }
 
