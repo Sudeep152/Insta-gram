@@ -54,26 +54,7 @@ fun NotificationScreen(){
     }
 }
 
-@Composable
-fun ProfileScreen(navController: NavHostController, igViewModel: IgViewModel){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    ) {
-        Text(
-            text = "Profile Screen",
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-        Column() {
-                  Text(text = "${igViewModel.userData.value}")
-        }
-    }
-}
+
 
 
 

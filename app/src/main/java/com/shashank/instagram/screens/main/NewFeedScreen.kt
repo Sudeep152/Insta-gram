@@ -94,7 +94,8 @@ fun SinglePost(name: String, postPhoto: Painter, description: String) {
                     )
                 }
 
-                Column(modifier = Modifier
+                Column(
+                    modifier = Modifier
                     .wrapContentSize()
                     .padding(3.dp)) {
                     Text(text = "Shashank152",
@@ -107,7 +108,9 @@ fun SinglePost(name: String, postPhoto: Painter, description: String) {
                 }
             }
 
-            Box(modifier = Modifier
+            Box(contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
                 .wrapContentSize()
                 .padding(5.dp, top = 0.dp, end = 5.dp, bottom = 0.dp)) {
                 Image(painter = postPhoto,

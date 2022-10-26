@@ -10,6 +10,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.shashank.instagram.screens.bottom.*
 import com.shashank.instagram.screens.main.NewFeedScreen
+import com.shashank.instagram.screens.main.ProfileScreen
 import com.shashank.instagram.sealed.BottomNavItem
 import com.shashank.instagram.viewmodel.IgViewModel
 
@@ -117,7 +118,7 @@ fun BottomNavGraph(navController: NavHostController) {
         ){
 
             val igViewModel = hiltViewModel<IgViewModel>()
-            ProfileScreen(navController,igViewModel)
+            ProfileScreen()
         }
 
     }
