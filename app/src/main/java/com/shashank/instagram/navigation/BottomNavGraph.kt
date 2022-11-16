@@ -118,7 +118,7 @@ fun BottomNavGraph(navController: NavHostController) {
         ){
 
             val igViewModel = hiltViewModel<IgViewModel>()
-            ProfileScreen()
+            ProfileScreen(igViewModel)
         }
 
     }
