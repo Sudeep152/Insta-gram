@@ -52,7 +52,7 @@ class IgViewModel @Inject constructor(
     }
 
 
-    fun onSignUp(username: String, email: String, pass: String, fullName: String) {
+    fun onSignUp(username: String, email: String, pass: String, fullName: String,imageUrl: String?,bio: String?) {
         progressBar.value = true
         db.collection(USER).whereEqualTo("username", username).get()
             .addOnSuccessListener { document ->
@@ -74,7 +74,7 @@ class IgViewModel @Inject constructor(
                                 if (it.isSuccessful) {
                                     isSigned.value = true
                                     ///CREATE PROFILE
-                                    createOrUpdateProfile(username,email,fullName)
+                                    createOrUpdateProfile(username,email,fullName,imageUrl,bio)
 
 
                                 } else {
@@ -110,10 +110,12 @@ class IgViewModel @Inject constructor(
     fun createOrUpdateProfile(
         username: String,
         email: String? = null, name: String? = null,
-        imageUrl: String? = null,
+        imageUrl: String?,
         bio: String? = null,
     ) {
         val uid = auth.currentUser?.uid
+        bio?:"Hi iam using shashank's meta"
+        imageUrl?:"https://cdn-icons-png.flaticon.com/512/847/847969.png?w=740&t=st=1668632210~exp=1668632810~hmac=94a6dc121dc2ced555ce9bf51913d4030ff2ef4a45356b773864527d3f22a80a"
         val userData = UserModel(
             userId = uid,
             username = username,

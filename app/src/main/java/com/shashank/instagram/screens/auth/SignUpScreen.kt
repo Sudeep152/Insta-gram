@@ -253,9 +253,12 @@ fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
                     ////BUtton
                     //CALL
                     //Handle
+                   val bio="Hi iam using shashank's meta"
+                  val  imageUrl="https://img.freepik.com/free-psd/3d-illustration-person-with-rainbow-sunglasses_23-2149436196.jpg?w=740&t=st=1668630445~exp=1668631045~hmac=10de9511e0adc55f38520d856f91abb57beaa6bed6b4ef9f93edce2c82fcf7d8"
+
                     igViewModel.onSignUp(usernameState.value.text,
                         emailState.value.text,
-                        passwordState.value.text, fullNameState.value.text)
+                        passwordState.value.text, fullNameState.value.text,imageUrl,bio)
 
 
                 }
