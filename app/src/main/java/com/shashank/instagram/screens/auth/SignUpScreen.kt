@@ -1,5 +1,6 @@
 package com.shashank.instagram.screens.auth
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -27,6 +28,7 @@ import com.shashank.instagram.sealed.Screen
 import com.shashank.instagram.viewmodel.IgViewModel
 
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun SignUpScreen(navController: NavController, igViewModel: IgViewModel) {
     val context = LocalContext.current

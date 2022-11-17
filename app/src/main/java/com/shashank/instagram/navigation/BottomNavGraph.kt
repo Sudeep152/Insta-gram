@@ -11,7 +11,9 @@ import com.google.accompanist.navigation.animation.composable
 import com.shashank.instagram.screens.bottom.*
 import com.shashank.instagram.screens.main.NewFeedScreen
 import com.shashank.instagram.screens.main.ProfileScreen
+import com.shashank.instagram.screens.main.profile.EditProfileScreen
 import com.shashank.instagram.sealed.BottomNavItem
+import com.shashank.instagram.sealed.Screen
 import com.shashank.instagram.viewmodel.IgViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -118,7 +120,33 @@ fun BottomNavGraph(navController: NavHostController) {
         ){
 
             val igViewModel = hiltViewModel<IgViewModel>()
-            ProfileScreen(igViewModel)
+            ProfileScreen(igViewModel,navController)
+        }
+
+
+        composable(route = Screen.EditProfileScreen.route,
+
+            enterTransition = {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(200))
+            },
+            exitTransition = {
+                slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(200))
+            },
+            popEnterTransition = {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(200))
+            },
+            popExitTransition = {
+                slideOutOfContainer(AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(200))
+            }
+
+        ){
+
+            val igViewModel = hiltViewModel<IgViewModel>()
+            EditProfileScreen(igViewModel,navController)
         }
 
     }

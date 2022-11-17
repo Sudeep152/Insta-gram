@@ -12,4 +12,5 @@ sealed class BottomNavItem(val route :String, val title:String, val icon:ImageVe
     object ProfileNavItem:BottomNavItem("profile_screen","Profile",Icons.Default.Person)
     object AddPostNavItem:BottomNavItem("add_post_screen","AddPost",Icons.Default.Add)
 
+
 }

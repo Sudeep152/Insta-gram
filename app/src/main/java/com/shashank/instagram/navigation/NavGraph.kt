@@ -15,6 +15,7 @@ import com.shashank.instagram.main.NotificationMessage
 import com.shashank.instagram.screens.auth.LoginScreen
 import com.shashank.instagram.screens.auth.SignUpScreen
 import com.shashank.instagram.screens.home.HomeScreen
+import com.shashank.instagram.screens.main.profile.EditProfileScreen
 import com.shashank.instagram.screens.splash.SplashScreen
 import com.shashank.instagram.sealed.Screen
 import com.shashank.instagram.viewmodel.IgViewModel
@@ -125,6 +126,7 @@ fun setUpNavGraph(navController: NavHostController) {
             val igViewModel = hiltViewModel<IgViewModel>()
             HomeScreen(navController = navController, igViewModel =igViewModel )
         }
+
 
     }
 

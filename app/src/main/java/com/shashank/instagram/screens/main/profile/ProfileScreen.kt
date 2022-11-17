@@ -25,13 +25,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.shashank.instagram.viewmodel.IgViewModel
 import  com.shashank.instagram.R
+import com.shashank.instagram.main.LoadingScreen
 import com.shashank.instagram.screens.main.profile.components.FollowFollowerPostBar
 import com.shashank.instagram.screens.main.profile.components.MyPost
 import com.shashank.instagram.screens.main.profile.components.ProfileFullInformation
 import com.shashank.instagram.screens.main.profile.components.ProfilePhoto
+import com.shashank.instagram.sealed.Screen
 
 @Composable
-fun ProfileScreen(igViewModel: IgViewModel) {
+fun ProfileScreen(igViewModel: IgViewModel,navHostController: NavHostController) {
 //    navController: NavHostController, igViewModel: IgViewModel
 //    Column(
 //        modifier = Modifier
@@ -50,6 +52,7 @@ fun ProfileScreen(igViewModel: IgViewModel) {
 //            Text(text = "${igViewModel.userData.value}")
 //        }
 //    }
+    val isLoading  = igViewModel.progressBar.value
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -57,7 +60,8 @@ fun ProfileScreen(igViewModel: IgViewModel) {
         Column(modifier = Modifier
             .background(Color(24, 24, 24))
             .wrapContentWidth()) {
-            ProfileInfo(igViewModel)
+            ProfileInfo(igViewModel,navHostController)
+
         }
 
         Spacer(modifier = Modifier.height(15.dp))
@@ -65,7 +69,9 @@ fun ProfileScreen(igViewModel: IgViewModel) {
         MyPost()
 
     }
-
+  if (isLoading){
+      LoadingScreen()
+  }
 
 }
 
@@ -98,7 +104,7 @@ fun DesginText(
 
 
 @Composable
-fun ProfileInfo(viewModel: IgViewModel) {
+fun ProfileInfo(viewModel: IgViewModel,navHostController: NavHostController) {
 
     val userData = viewModel.userData.value
     Card(modifier = Modifier
@@ -122,7 +128,7 @@ fun ProfileInfo(viewModel: IgViewModel) {
                 FollowFollowerPostBar(title = "Follow", valueS = "50")
             }
             Spacer(modifier = Modifier.height(15.dp))
-            IButton()
+            IButton(navHostController)
         }
 
     }
@@ -130,9 +136,14 @@ fun ProfileInfo(viewModel: IgViewModel) {
 }
 
 @Composable
-fun IButton() {
+fun IButton(navHostController: NavHostController) {
 
-    Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
+    Button(onClick = {
+
+
+                     navHostController.navigate(Screen.EditProfileScreen.route)
+
+                     }, colors = ButtonDefaults.buttonColors(
         backgroundColor = Color.Transparent
 
     ), shape = RoundedCornerShape(90.dp), contentPadding = PaddingValues(),
