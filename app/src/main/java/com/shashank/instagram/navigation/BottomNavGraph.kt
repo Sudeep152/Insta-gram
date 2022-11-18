@@ -106,15 +106,15 @@ fun BottomNavGraph(navController: NavHostController) {
         },
             exitTransition = {
                 slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
-                    animationSpec = tween(200))
+                    animationSpec = tween(100))
             },
             popEnterTransition = {
                 slideIntoContainer(AnimatedContentScope.SlideDirection.Right,
-                    animationSpec = tween(200))
+                    animationSpec = tween(100))
             },
             popExitTransition = {
                 slideOutOfContainer(AnimatedContentScope.SlideDirection.Right,
-                    animationSpec = tween(200))
+                    animationSpec = tween(100))
             }
 
         ){

@@ -28,6 +28,7 @@ import com.shashank.instagram.R
 import com.shashank.instagram.navigation.BottomNavGraph
 import com.shashank.instagram.screens.auth.InstagramLogo
 import com.shashank.instagram.sealed.BottomNavItem
+import com.shashank.instagram.sealed.Screen
 import com.shashank.instagram.viewmodel.IgViewModel
 import kotlinx.coroutines.delay
 
@@ -37,7 +38,9 @@ fun HomeScreen(navController: NavHostController, igViewModel: IgViewModel) {
    MainScreen()
 
 
+
 }
+
 
 @OptIn(ExperimentalAnimationApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

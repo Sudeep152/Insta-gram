@@ -107,25 +107,26 @@ fun setUpNavGraph(navController: NavHostController) {
         composable(route = Screen.HomeScreen.route
         ,   enterTransition = {
                 slideIntoContainer(AnimatedContentScope.SlideDirection.Left,
-                    animationSpec = tween(200))
+                    animationSpec = tween(100))
             },
             exitTransition = {
                 slideOutOfContainer(AnimatedContentScope.SlideDirection.Left,
-                    animationSpec = tween(200))
+                    animationSpec = tween(100))
             },
             popEnterTransition = {
                 slideIntoContainer(AnimatedContentScope.SlideDirection.Right,
-                    animationSpec = tween(200))
+                    animationSpec = tween(100))
             },
             popExitTransition = {
                 slideOutOfContainer(AnimatedContentScope.SlideDirection.Right,
-                    animationSpec = tween(200))
+                    animationSpec = tween(100))
             }
         ){
 
             val igViewModel = hiltViewModel<IgViewModel>()
             HomeScreen(navController = navController, igViewModel =igViewModel )
         }
+
 
 
     }

@@ -139,8 +139,6 @@ fun ProfileInfo(viewModel: IgViewModel,navHostController: NavHostController) {
 fun IButton(navHostController: NavHostController) {
 
     Button(onClick = {
-
-
                      navHostController.navigate(Screen.EditProfileScreen.route)
 
                      }, colors = ButtonDefaults.buttonColors(
