@@ -1,5 +1,6 @@
 package com.shashank.instagram.screens.main
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,35 +24,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.shashank.instagram.viewmodel.IgViewModel
 import  com.shashank.instagram.R
 import com.shashank.instagram.main.LoadingScreen
 import com.shashank.instagram.screens.main.profile.components.FollowFollowerPostBar
-import com.shashank.instagram.screens.main.profile.components.MyPost
 import com.shashank.instagram.screens.main.profile.components.ProfileFullInformation
-import com.shashank.instagram.screens.main.profile.components.ProfilePhoto
 import com.shashank.instagram.sealed.Screen
 
 @Composable
 fun ProfileScreen(igViewModel: IgViewModel,navHostController: NavHostController) {
-//    navController: NavHostController, igViewModel: IgViewModel
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .wrapContentSize(Alignment.Center)
-//    ) {
-//        Text(
-//            text = "Profile Screen",
-//            fontWeight = FontWeight.Bold,
-//            color = Color.Black,
-//            modifier = Modifier.align(Alignment.CenterHorizontally),
-//            textAlign = TextAlign.Center,
-//            fontSize = 20.sp
-//        )
-//        Column() {
-//            Text(text = "${igViewModel.userData.value}")
-//        }
-//    }
+
     val isLoading  = igViewModel.progressBar.value
 
     Column(modifier = Modifier
@@ -63,10 +48,9 @@ fun ProfileScreen(igViewModel: IgViewModel,navHostController: NavHostController)
             ProfileInfo(igViewModel,navHostController)
 
         }
-
         Spacer(modifier = Modifier.height(15.dp))
         postTagBar()
-        MyPost()
+
 
     }
   if (isLoading){
@@ -135,13 +119,15 @@ fun ProfileInfo(viewModel: IgViewModel,navHostController: NavHostController) {
 
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun IButton(navHostController: NavHostController) {
-
+    
     Button(onClick = {
+
                      navHostController.navigate(Screen.EditProfileScreen.route)
 
-                     }, colors = ButtonDefaults.buttonColors(
+               }, colors = ButtonDefaults.buttonColors(
         backgroundColor = Color.Transparent
 
     ), shape = RoundedCornerShape(90.dp), contentPadding = PaddingValues(),
